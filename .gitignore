@@ -1,0 +1,8 @@
+/models/
+/restapi/doc.go
+/restapi/embedded_spec.go
+/restapi/server.go
+/restapi/operations/
+/test_http
+/projectEnv.mf
+/.idea/
