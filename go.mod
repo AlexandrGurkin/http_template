@@ -3,6 +3,7 @@ module github.com/AlexandrGurkin/http_template
 go 1.15
 
 require (
+	github.com/AlexandrGurkin/common v1.0.4
 	github.com/cucumber/godog v0.11.0
 	github.com/go-openapi/errors v0.20.0
 	github.com/go-openapi/loads v0.20.2
@@ -11,5 +12,6 @@ require (
 	github.com/go-openapi/strfmt v0.20.0
 	github.com/go-openapi/swag v0.19.14
 	github.com/jessevdk/go-flags v1.4.0
+	github.com/sirupsen/logrus v1.6.0
 	golang.org/x/net v0.0.0-20210119194325-5f4716e94777
 )
