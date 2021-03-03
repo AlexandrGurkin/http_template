@@ -47,3 +47,6 @@ build: ## Build app
 	@echo Build completed
 
 build-full: swagger build
+
+get-tools:
+	@go get github.com/cucumber/godog/cmd/godog@v0.11.0
