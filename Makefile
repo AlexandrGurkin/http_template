@@ -33,12 +33,13 @@ download: ##Download go.mod dependencies
 	@go mod download
 	@echo Download completed
 
-swagger: ##Run swagger generation
+swagger: ##Run swagger generation нужно сделать универсально, отвязать от проекта
 	@echo Delete generated files
-	@rm -rf restapi/operations restapi/doc.go restapi/embedded_spec.go restapi/server.go models
+	@rm -rf restapi/operations restapi/doc.go restapi/embedded_spec.go restapi/server.go models client
 	@echo Delete completed
 	@echo Code generation
 	@docker run --rm -it -e GOPATH=/go -v $$(pwd):/work -w /work quay.io/goswagger/swagger:v0.25.0 generate server --exclude-main -f "./api/swagger.yaml"
+	@docker run --rm -it -e GOPATH=/go -v $$(pwd):/work -w /work quay.io/goswagger/swagger:v0.25.0 generate client -f "./api/swagger.yaml" -c client/api -m client/models
 	@echo Generation completed
 
 build: ## Build app
@@ -50,3 +51,7 @@ build-full: swagger build
 
 get-tools:
 	@go get github.com/cucumber/godog/cmd/godog@v0.11.0
+
+bdd-local:
+	@cd ./bdd; \
+	VERSION_URL=0.0.0.0:8022 godog
