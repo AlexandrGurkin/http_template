@@ -8,6 +8,7 @@ import (
 	"github.com/AlexandrGurkin/common/xlog"
 	"github.com/AlexandrGurkin/common/xlog/xlogrus"
 	"github.com/AlexandrGurkin/http_template/cmd"
+	"github.com/AlexandrGurkin/http_template/internal/handlers"
 	"github.com/AlexandrGurkin/http_template/restapi"
 	"github.com/AlexandrGurkin/http_template/restapi/operations"
 	"github.com/go-openapi/loads"
@@ -64,6 +65,7 @@ func runMain(cmd *cobra.Command, args []string) {
 		logger.WithXFields(xlog.Fields{consts.FieldModule: "swagger_api_loger"}).
 			Debugf(s, i...)
 	}
+	api.VersionGetVersionHandler = handlers.VersionHandler{}
 	server.ConfigureAPI()
 
 	if err = server.Serve(); err != nil {

@@ -31,6 +31,15 @@ definitions:
       version:
         type: string
         example: v1.0.0
+      branch:
+        type: string
+        example: main
+      commit:
+        type: string
+        example: 6c8d084825ef4281094bd1bf26003e9a057c3305
+      build_time:
+        type: string
+        example: 2021-03-06_22:22:44_MSK
 
   Response.Error:
     title: Error response
