@@ -1,0 +1,16 @@
+<Monitoring>
+    <Host address="[target]" interval="1">
+        <CPU fielddrop='["time_*", "usage_guest_nice"]'></CPU>
+        <Kernel fielddrop='["active", "inactive", "total", "used_per*", "avail*"]'></Kernel>
+        <Net fielddrop='["icmp*", "ip*", "udplite*", "tcp*", "udp*", "drop*", "err*"]' interfaces='["eth0","eth1","lo"]'></Net>
+        <System fielddrop='["n_users", "n_cpus", "uptime*"]'></System>
+        <Memory fielddrop='["active", "inactive", "total", "used_per*", "avail*"]'></Memory>
+        <Disk devices='["vda1","sda1","sda2","sda3"]'></Disk>
+        <Netstat />
+        <TelegrafRaw>
+            [[inputs.ping]]
+            urls = ["127.0.0.1"]
+            count = 1
+        </TelegrafRaw>
+    </Host>
+</Monitoring>

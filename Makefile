@@ -53,3 +53,10 @@ bdd-local:
 	@cd ./bdd; \
 	VERSION_URL=0.0.0.0:8022 godog
 	@docker-compose down
+
+load-test: #        --entrypoint /bin/bash
+	@docker run  \
+        -v $$(pwd)/test/loadtest:/var/loadtest \
+        -v $$SSH_AUTH_SOCK:/ssh-agent -e SSH_AUTH_SOCK=/ssh-agent \
+        --net host --rm \
+        -it direvius/yandex-tank

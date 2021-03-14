@@ -2,6 +2,7 @@ package main
 
 import (
 	"os"
+	"time"
 
 	"github.com/AlexandrGurkin/common/consts"
 	"github.com/AlexandrGurkin/common/middlewares"
@@ -59,7 +60,7 @@ func runMain(cmd *cobra.Command, args []string) {
 	//}
 
 	server.Host = "0.0.0.0"
-	server.Port = 8022
+	server.Port = 8099
 	restapi.SetMiddlewareConfig(middlewares.MiddlewareConfig{Logger: logger})
 	api.Logger = func(s string, i ...interface{}) {
 		logger.WithXFields(xlog.Fields{consts.FieldModule: "swagger_api_loger"}).
@@ -67,6 +68,7 @@ func runMain(cmd *cobra.Command, args []string) {
 	}
 	api.VersionGetVersionHandler = handlers.VersionHandler{}
 	server.ConfigureAPI()
+	server.KeepAlive = 10 * time.Second
 
 	if err = server.Serve(); err != nil {
 		logger.Fatal(err)

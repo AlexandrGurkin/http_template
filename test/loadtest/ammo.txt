@@ -1,0 +1,5 @@
+[Connection: keep-alive]
+[Host: target.example.com]
+[Cookie: None]
+[Keep-Alive: timeout=5]
+/api/v1/version

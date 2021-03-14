@@ -1,0 +1,24 @@
+phantom:
+  address: 127.0.0.1:8022 # [Target's address]:[target's port]
+  ammofile: ammo.txt
+  ammo_type: uri
+  header_http: "1.1"
+#  loop: 150000 # don't stop when the end of ammo is reached but loop it 10000 times
+  load_profile:
+    load_type: rps #instances # schedule load by defining requests per second
+    schedule: step(1000, 10000, 1000, 7s) # starting from 1rps growing linearly to 10rps during 10 minutes
+overload:
+  enabled: true
+  package: yandextank.plugins.DataUploader
+  token_file: "token.txt"
+autostop:
+  autostop:
+    - time(1s,10s)
+    - http(5xx,100%,1s)
+    - net(xx,1,30)
+console:
+  enabled: true # enable console output
+telegraf:
+  enabled: true
+  package: yandextank.plugins.Telegraf
+  config: monitoring.xml
