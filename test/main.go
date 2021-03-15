@@ -14,6 +14,8 @@ import (
 	"github.com/AlexandrGurkin/http_template/restapi/operations"
 	"github.com/go-openapi/loads"
 	"github.com/spf13/cobra"
+
+	_ "net/http/pprof"
 )
 
 var runCmd = &cobra.Command{
@@ -61,10 +63,10 @@ func runMain(cmd *cobra.Command, args []string) {
 
 	server.Host = "0.0.0.0"
 	server.Port = 8099
-	restapi.SetMiddlewareConfig(middlewares.MiddlewareConfig{Logger: logger})
+	restapi.SetMiddlewareConfig(middlewares.MiddlewareConfig{Logger: logger, Pprof: true})
 	api.Logger = func(s string, i ...interface{}) {
 		logger.WithXFields(xlog.Fields{consts.FieldModule: "swagger_api_loger"}).
-			Debugf(s, i...)
+			Infof(s, i...)
 	}
 	api.VersionGetVersionHandler = handlers.VersionHandler{}
 	server.ConfigureAPI()

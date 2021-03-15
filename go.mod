@@ -3,7 +3,7 @@ module github.com/AlexandrGurkin/http_template
 go 1.15
 
 require (
-	github.com/AlexandrGurkin/common v1.0.5
+	github.com/AlexandrGurkin/common v1.0.8
 	github.com/cucumber/godog v0.11.0
 	github.com/go-openapi/errors v0.20.0
 	github.com/go-openapi/loads v0.20.2

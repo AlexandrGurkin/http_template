@@ -1,0 +1,9 @@
+GET http://0.0.0.0:8099/debug/pprof/profile/?seconds=5
+
+go tool pprof http://localhost:6060/debug/pprof/heap
+go tool pprof http://localhost:6060/debug/pprof/profile?seconds=30
+go tool pprof http://localhost:6060/debug/pprof/block
+go tool pprof http://localhost:6060/debug/pprof/mutex
+
+wget -O trace.out http://localhost:6060/debug/pprof/trace?seconds=5
+go tool trace trace.out
