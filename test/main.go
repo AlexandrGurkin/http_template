@@ -7,7 +7,7 @@ import (
 	"github.com/AlexandrGurkin/common/consts"
 	"github.com/AlexandrGurkin/common/middlewares"
 	"github.com/AlexandrGurkin/common/xlog"
-	"github.com/AlexandrGurkin/common/xlog/xlogrus"
+	"github.com/AlexandrGurkin/common/xlog/xzerolog"
 	"github.com/AlexandrGurkin/http_template/cmd"
 	"github.com/AlexandrGurkin/http_template/internal/handlers"
 	"github.com/AlexandrGurkin/http_template/restapi"
@@ -40,7 +40,7 @@ func init() {
 }
 
 func runMain(cmd *cobra.Command, args []string) {
-	logger := xlogrus.NewXLogrus(xlog.LoggerCfg{
+	logger := xzerolog.NewXZerolog(xlog.LoggerCfg{
 		Level: "trace",
 		Out:   os.Stdout,
 	})
@@ -48,24 +48,17 @@ func runMain(cmd *cobra.Command, args []string) {
 	var err error
 	swaggerSpec, err := loads.Embedded(restapi.SwaggerJSON, restapi.FlatSwaggerJSON)
 	if err != nil {
-		logger.Fatal(err)
+		logger.Fatal(err.Error())
 	}
 
 	api := operations.NewTemplateForHTTPServerAPI(swaggerSpec)
 	server := restapi.NewServer(api)
 
-	//cfg := configuration.Config{}
-	//err = viper.Unmarshal(&cfg)
-	//if err != nil {
-	//	log.WithFields(log.Fields{consts.FieldModule: runnerModule, consts.FieldAction: consts.ConfigParsing}).
-	//		Fatalf("fail to unmarshal config [%s]", err.Error())
-	//}
-
 	server.Host = "0.0.0.0"
 	server.Port = 8099
 	restapi.SetMiddlewareConfig(middlewares.MiddlewareConfig{Logger: logger, Pprof: true})
 	api.Logger = func(s string, i ...interface{}) {
-		logger.WithXFields(xlog.Fields{consts.FieldModule: "swagger_api_loger"}).
+		logger.WithXFields(xlog.Fields{consts.FieldModule: "swagger_api_logger"}).
 			Infof(s, i...)
 	}
 	api.VersionGetVersionHandler = handlers.VersionHandler{}
@@ -73,7 +66,7 @@ func runMain(cmd *cobra.Command, args []string) {
 	server.KeepAlive = 10 * time.Second
 
 	if err = server.Serve(); err != nil {
-		logger.Fatal(err)
+		logger.Fatal(err.Error())
 	}
 }
 
